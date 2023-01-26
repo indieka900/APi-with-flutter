@@ -86,6 +86,12 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('My Json Data'),
+        centerTitle: true,
+        elevation: 0,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
@@ -110,17 +116,22 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.only(right: 10, top: 12, left: 10),
+                    margin: const EdgeInsets.only(
+                      right: 10,
+                      top: 12,
+                      left: 10,
+                      bottom: 5,
+                    ),
                     width: 200,
                     //height: 100,
                     decoration: BoxDecoration(
                       color: Colors.primaries[index % Colors.primaries.length],
                       borderRadius: index % 2 == 0
-                          ? const BorderRadius.horizontal(
-                              right: Radius.circular(20),
+                          ? const BorderRadius.only(
+                              bottomRight: Radius.circular(32),
                             )
-                          : const BorderRadius.horizontal(
-                              left: Radius.circular(20),
+                          : const BorderRadius.only(
+                              topLeft: Radius.circular(32),
                             ),
                     ),
                     child: Padding(
@@ -143,15 +154,15 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                               ),
                             ),
                           ),
-                          Text(
-                            snapshot.data![index]['company']['name'],
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              //fontStyle: FontStyle.italic,
-                              color: Color.fromARGB(255, 71, 238, 5),
-                            ),
-                          ),
+                          // Text(
+                          //   snapshot.data![index]['company']['name'],
+                          //   style: const TextStyle(
+                          //     fontSize: 17,
+                          //     fontWeight: FontWeight.w600,
+                          //     //fontStyle: FontStyle.italic,
+                          //     color: Color.fromARGB(255, 71, 238, 5),
+                          //   ),
+                          // ),
                           Text(
                             snapshot.data![index]['bio'],
                             style: const TextStyle(
@@ -169,7 +180,29 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
+            return Center(
+              child: Container(
+                height: 125,
+                padding: const EdgeInsets.only(right: 10, top: 12, left: 18),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(45),
+                    topRight: Radius.circular(45),
+                  ),
+                  color: Color.fromARGB(255, 230, 129, 92),
+                ),
+                child: Center(
+                  child: Text(
+                    "${snapshot.error}",
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 3, 54, 18),
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+            );
           }
           return const Center(child: CircularProgressIndicator());
         },
