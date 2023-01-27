@@ -181,7 +181,9 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Container(
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 12),
+                curve: Curves.easeInOut,
                 height: 125,
                 padding: const EdgeInsets.only(right: 10, top: 12, left: 18),
                 margin: const EdgeInsets.symmetric(horizontal: 25),
