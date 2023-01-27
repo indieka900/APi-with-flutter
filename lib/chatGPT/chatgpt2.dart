@@ -8,7 +8,7 @@ class Services {
   static Future<List<dynamic>> fetchData() async {
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      var data = json.decode(response.body).reversed.toList();
       return data;
     } else {
       throw Exception('Failed to load data');
@@ -145,7 +145,7 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: Text(
+                            child: SelectableText(
                               snapshot.data![index]['username'],
                               style: const TextStyle(
                                 fontSize: 25,
@@ -163,7 +163,7 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                           //     color: Color.fromARGB(255, 71, 238, 5),
                           //   ),
                           // ),
-                          Text(
+                          SelectableText(
                             snapshot.data![index]['bio'],
                             style: const TextStyle(
                               fontSize: 15,

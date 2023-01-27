@@ -36,6 +36,7 @@ class _PersonAddState extends State<PersonAdd> {
         child: Column(
           children: [
             TextField(
+              enableInteractiveSelection: true,
               controller: _namecontroller,
               decoration: InputDecoration(
                 filled: true,
@@ -50,6 +51,7 @@ class _PersonAddState extends State<PersonAdd> {
               height: 10,
             ),
             TextField(
+              enableInteractiveSelection: true,
               controller: _biocontroller,
               decoration: InputDecoration(
                 filled: true,
@@ -94,6 +96,7 @@ class _PersonAddState extends State<PersonAdd> {
                     );
                     //print(response.statusCode);
                     if (response.statusCode == 200) {
+                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
                         builder: (_) => AlertDialog(

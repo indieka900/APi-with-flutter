@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
+        useMaterial3: true,
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: const MyHorizontalContainer(),
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: Text(
                 '$_counter',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
           ],
