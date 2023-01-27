@@ -16,11 +16,8 @@ class Services {
   }
 
   static Future<http.Response> createResource(Map<String, String> data) async {
-    final response = await http
-        .post(url,
-            headers: {"Content-Type": "application/json"},
-            body: jsonEncode(data))
-        .then((value) {});
+    final response = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: jsonEncode(data));
 
     if (response.statusCode == 201) {
       return response;
@@ -30,51 +27,29 @@ class Services {
   }
 }
 
-// class MyHorizontalContainer extends StatelessWidget {
-//   const MyHorizontalContainer({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SingleChildScrollView(
-//         scrollDirection: Axis.horizontal,
-//         child: Container(
-//           width: 1000,
-//           height: 200,
-//           color: Colors.blue,
-//           child: Row(
-//             children: [
-//               Container(
-//                 width: 200,
-//                 height: 200,
-//                 color: Colors.red,
-//               ),
-//               Container(
-//                 width: 200,
-//                 height: 200,
-//                 color: Colors.green,
-//               ),
-//               Container(
-//                 width: 200,
-//                 height: 200,
-//                 color: Colors.yellow,
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class MyHorizontalContainer extends StatefulWidget {
-  const MyHorizontalContainer({super.key});
-
-  @override
-  State<MyHorizontalContainer> createState() => _MyHorizontalContainerState();
+void delete(String username) async {
+  var url = Uri.http('localhost:8000', '/advocates/$username/');
+  try {
+    final response = await http.delete(url);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('Data deleted successfully');
+    } else {
+      throw Exception('Failed to delete $username');
+    }
+  } catch (e) {
+    print(e);
+  }
 }
 
-class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
+class MyVerticalContainer extends StatefulWidget {
+  const MyVerticalContainer({super.key});
+
+  @override
+  State<MyVerticalContainer> createState() => _MyVerticalContainerState();
+}
+
+class _MyVerticalContainerState extends State<MyVerticalContainer> {
   late Future<List<dynamic>> _data;
 
   @override
@@ -110,7 +85,8 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
         future: _data,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
+            return Container(
+              margin: const EdgeInsets.only(bottom: 10),
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data!.length,
@@ -123,7 +99,6 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                       bottom: 5,
                     ),
                     width: 200,
-                    //height: 100,
                     decoration: BoxDecoration(
                       color: Colors.primaries[index % Colors.primaries.length],
                       borderRadius: index % 2 == 0
@@ -145,29 +120,48 @@ class _MyHorizontalContainerState extends State<MyHorizontalContainer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                            child: SelectableText(
-                              snapshot.data![index]['username'],
-                              style: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 7, 50, 53),
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SelectableText(
+                                  snapshot.data![index]['username'],
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 7, 50, 53),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 250, 248, 248),
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      delete(snapshot.data![index]['username']);
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return const MyVerticalContainer();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    color: const Color.fromARGB(255, 241, 5, 5),
+                                    icon: const Icon(
+                                      Icons.delete_forever,
+                                      size: 30,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          // Text(
-                          //   snapshot.data![index]['company']['name'],
-                          //   style: const TextStyle(
-                          //     fontSize: 17,
-                          //     fontWeight: FontWeight.w600,
-                          //     //fontStyle: FontStyle.italic,
-                          //     color: Color.fromARGB(255, 71, 238, 5),
-                          //   ),
-                          // ),
                           SelectableText(
                             snapshot.data![index]['bio'],
                             style: const TextStyle(
                               fontSize: 15,
-                              //fontWeight: FontWeight.w600,
                               fontStyle: FontStyle.italic,
                               color: Color.fromARGB(255, 25, 238, 5),
                             ),

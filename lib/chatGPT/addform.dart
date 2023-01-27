@@ -101,15 +101,15 @@ class _PersonAddState extends State<PersonAdd> {
                         context: context,
                         builder: (_) => AlertDialog(
                           title: const Text('Submission status'),
-                          content: const Text(
-                              'Submission succesfully!!!!\nOne advocate added'),
+                          content: Text(
+                              '"${_namecontroller.text}" added succesfully'),
                           actions: [
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return const MyHorizontalContainer();
+                                      return const MyVerticalContainer();
                                     },
                                   ),
                                 );
