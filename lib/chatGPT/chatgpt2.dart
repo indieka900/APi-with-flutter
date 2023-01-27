@@ -131,12 +131,13 @@ class _MyVerticalContainerState extends State<MyVerticalContainer> {
                                     color: Color.fromARGB(255, 7, 50, 53),
                                   ),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 250, 248, 248),
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
+                                PhysicalModel(
+                                  color:
+                                      const Color.fromARGB(255, 188, 217, 240),
+                                  //borderRadius: BorderRadius.circular(30),
+                                  shape: BoxShape.circle,
+                                  shadowColor: Colors.black,
+                                  elevation: 12,
                                   child: IconButton(
                                     onPressed: () {
                                       delete(snapshot.data![index]['username']);
