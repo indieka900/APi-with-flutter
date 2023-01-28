@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/widgets/deals.dart';
+import 'package:home_app/widgets/transact.dart';
+import 'package:home_app/widgets/vooma.dart';
 
 class Kcbdraft extends StatefulWidget {
   const Kcbdraft({super.key});
@@ -26,7 +29,7 @@ class _KcbdraftState extends State<Kcbdraft> {
             Stack(
               children: [
                 Container(
-                  height: 200,
+                  height: 230,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -34,8 +37,9 @@ class _KcbdraftState extends State<Kcbdraft> {
                       colors: <Color>[
                         Color.fromARGB(255, 145, 209, 72),
                         Color.fromARGB(255, 74, 133, 7),
-                        Color.fromARGB(255, 70, 52, 87),
-                        Color.fromARGB(255, 45, 1, 70),
+                        Color.fromARGB(255, 61, 95, 95),
+                        //Color.fromARGB(255, 70, 52, 87),
+                        Color.fromARGB(255, 4, 58, 58),
                       ],
                     ),
                     borderRadius: BorderRadius.only(
@@ -122,7 +126,9 @@ class _KcbdraftState extends State<Kcbdraft> {
           BottomNavigationBarItem(
             backgroundColor: Colors.lightGreen,
             icon: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/whatsApp');
+              },
               child: const Icon(Icons.wallet_giftcard),
             ),
             label: 'ACCOUNT',
@@ -134,352 +140,6 @@ class _KcbdraftState extends State<Kcbdraft> {
           });
         },
       ),
-    );
-  }
-}
-
-class Deals extends StatelessWidget {
-  const Deals({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            height: 100,
-            width: 300,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 27, 78, 37),
-            ),
-          ),
-          Container(
-            height: 150,
-            width: 300,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 143, 153, 145),
-            ),
-          ),
-          Container(
-            height: 100,
-            width: 300,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 143, 153, 145),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Transact extends StatelessWidget {
-  const Transact({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.only(top: 14.5, bottom: 10),
-        width: 300,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(2, 2.5),
-              blurRadius: 8,
-              spreadRadius: 0.9,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  //mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 11,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  //mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.lightGreen,
-                        //minRadius: 30,
-                        child: Icon(
-                          Icons.person,
-                          //size: 35,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    const Text(
-                      'Money',
-                      style: TextStyle(fontSize: 12),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Vooma extends StatelessWidget {
-  const Vooma({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        InkWell(
-          onTap: () {},
-          child: Container(
-            height: 90,
-            width: 85,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(2, 2.5),
-                  blurRadius: 8,
-                  spreadRadius: 0.9,
-                ),
-              ],
-            ),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Color.fromARGB(248, 158, 3, 3),
-                  //minRadius: 30,
-                  child: Icon(Icons.payment
-                      //size: 35,
-                      ),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  'PAY BILL',
-                  style: TextStyle(fontSize: 9),
-                )
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: Container(
-            height: 90,
-            width: 85,
-            padding: const EdgeInsets.all(10),
-            //margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(2, 2.5),
-                  blurRadius: 8,
-                  spreadRadius: 0.9,
-                ),
-              ],
-            ),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Color.fromARGB(248, 158, 3, 3),
-                  //minRadius: 30,
-                  child: Icon(
-                    Icons.money,
-                    //size: 35,
-                  ),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  'BUY GOODS',
-                  style: TextStyle(fontSize: 9),
-                )
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: Container(
-            height: 90,
-            width: 85,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(2, 2.5),
-                  blurRadius: 8,
-                  spreadRadius: 0.9,
-                ),
-              ],
-            ),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Color.fromARGB(248, 158, 3, 3),
-                  //minRadius: 30,
-                  child: Icon(
-                    Icons.school,
-                    //size: 35,
-                  ),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  'LIPA KARO',
-                  style: TextStyle(fontSize: 9),
-                )
-              ],
-            ),
-          ),
-        )
-      ],
     );
   }
 }
