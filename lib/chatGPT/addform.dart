@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:home_app/chatGPT/chatgpt2.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:home_app/services/services.dart';
 
 class PersonAdd extends StatefulWidget {
   const PersonAdd({super.key});
@@ -14,7 +16,6 @@ class _PersonAddState extends State<PersonAdd> {
   final formKey = GlobalKey<FormState>();
 
   final _namecontroller = TextEditingController();
-  //final _companyNamecontroller = TextEditingController();
 
   final _biocontroller = TextEditingController();
 
@@ -43,7 +44,6 @@ class _PersonAddState extends State<PersonAdd> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                //hintText: 'use your email address ending with (.com only)',
                 labelText: 'Username',
               ),
             ),
@@ -61,19 +61,6 @@ class _PersonAddState extends State<PersonAdd> {
                 labelText: 'Bio',
               ),
             ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // TextField(
-            //   controller: _companyNamecontroller,
-            //   decoration: InputDecoration(
-            //     filled: true,
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     labelText: 'Company Name',
-            //   ),
-            // ),
             const SizedBox(
               height: 25,
             ),
@@ -86,17 +73,13 @@ class _PersonAddState extends State<PersonAdd> {
                     final data = {
                       "username": _namecontroller.text,
                       "bio": _biocontroller.text,
-                      //"company": _companyNamecontroller.text,
                     };
-                    var url = Uri.http('localhost:8000', '/advocates/');
                     final response = await http.post(
                       url,
                       body: json.encode(data),
                       headers: {"Content-Type": "application/json"},
                     );
-                    //print(response.statusCode);
                     if (response.statusCode == 200) {
-                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
@@ -106,20 +89,30 @@ class _PersonAddState extends State<PersonAdd> {
                           actions: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const MyVerticalContainer();
-                                    },
-                                  ),
-                                );
+                                Navigator.of(context).pushNamed('/api');
                               },
                               child: const Text('Ok'),
                             ),
                           ],
                         ),
                       );
-                    } else {}
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: const Text('Submission status'),
+                          content: Text('${response.statusCode} Error occured'),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Ok'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   }
                 },
                 child: const Text("Create"),

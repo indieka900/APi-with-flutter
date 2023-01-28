@@ -1,46 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:home_app/chatGPT/addform.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:home_app/services/services.dart';
 
-class Services {
-  static var url = Uri.http('localhost:8000', '/advocates/');
-  static Future<List<dynamic>> fetchData() async {
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body).reversed.toList();
-      return data;
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
-  static Future<http.Response> createResource(Map<String, String> data) async {
-    final response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: jsonEncode(data));
-
-    if (response.statusCode == 201) {
-      return response;
-    } else {
-      throw Exception('Failed to create resource');
-    }
-  }
-}
-
-void delete(String username) async {
-  var url = Uri.http('localhost:8000', '/advocates/$username/');
-  try {
-    final response = await http.delete(url);
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      print('Data deleted successfully');
-    } else {
-      throw Exception('Failed to delete $username');
-    }
-  } catch (e) {
-    print(e);
-  }
-}
+import '../widgets/errorbox.dart';
+import '../widgets/showinfo.dart';
 
 class MyVerticalContainer extends StatefulWidget {
   const MyVerticalContainer({super.key});
@@ -63,19 +28,21 @@ class _MyVerticalContainerState extends State<MyVerticalContainer> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('My Json Data'),
+        backgroundColor: const Color.fromARGB(246, 69, 190, 134),
+        title: const Text(
+          'My Json Data',
+          style: TextStyle(
+            fontSize: 27,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return const PersonAdd();
-              },
-            ),
-          );
+          Navigator.of(context).pushNamed('/create');
         },
         child: const Icon(
           Icons.person_add,
@@ -86,119 +53,18 @@ class _MyVerticalContainerState extends State<MyVerticalContainer> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 80, top: 0),
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(
-                      right: 10,
-                      top: 12,
-                      left: 10,
-                      bottom: 5,
-                    ),
-                    width: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.primaries[index % Colors.primaries.length],
-                      borderRadius: index % 2 == 0
-                          ? const BorderRadius.only(
-                              bottomRight: Radius.circular(32),
-                            )
-                          : const BorderRadius.only(
-                              topLeft: Radius.circular(32),
-                            ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 18.0,
-                        right: 10,
-                        top: 8.0,
-                        bottom: 5,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SelectableText(
-                                  snapshot.data![index]['username'],
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 7, 50, 53),
-                                  ),
-                                ),
-                                PhysicalModel(
-                                  color:
-                                      const Color.fromARGB(255, 188, 217, 240),
-                                  //borderRadius: BorderRadius.circular(30),
-                                  shape: BoxShape.circle,
-                                  shadowColor: Colors.black,
-                                  elevation: 12,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      delete(snapshot.data![index]['username']);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return const MyVerticalContainer();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    color: const Color.fromARGB(255, 241, 5, 5),
-                                    icon: const Icon(
-                                      Icons.delete_forever,
-                                      size: 30,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SelectableText(
-                            snapshot.data![index]['bio'],
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.italic,
-                              color: Color.fromARGB(255, 25, 238, 5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  return ShowInfo(index: index, snap: snapshot);
                 },
               ),
             );
           } else if (snapshot.hasError) {
-            return Center(
-              child: AnimatedContainer(
-                duration: const Duration(seconds: 12),
-                curve: Curves.easeInOut,
-                height: 125,
-                padding: const EdgeInsets.only(right: 10, top: 12, left: 18),
-                margin: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(45),
-                    topRight: Radius.circular(45),
-                  ),
-                  color: Color.fromARGB(255, 230, 129, 92),
-                ),
-                child: Center(
-                  child: Text(
-                    "${snapshot.error}",
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 3, 54, 18),
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-              ),
+            return ErrorBox(
+              message: snapshot.error.toString(),
             );
           }
           return const Center(child: CircularProgressIndicator());

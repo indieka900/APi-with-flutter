@@ -112,7 +112,9 @@ class _KcbdraftState extends State<Kcbdraft> {
           BottomNavigationBarItem(
             backgroundColor: Colors.lightGreen,
             icon: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/api');
+              },
               child: const Icon(Icons.clean_hands),
             ),
             label: 'LOANS',
