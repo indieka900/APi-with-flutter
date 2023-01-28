@@ -122,7 +122,9 @@ class _KcbdraftState extends State<Kcbdraft> {
           BottomNavigationBarItem(
             backgroundColor: Colors.lightGreen,
             icon: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/whatsApp');
+              },
               child: const Icon(Icons.wallet_giftcard),
             ),
             label: 'ACCOUNT',
@@ -144,7 +146,7 @@ class Deals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 170,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -157,6 +159,7 @@ class Deals extends StatelessWidget {
             ),
           ),
           Container(
+            margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             height: 150,
             width: 300,
             decoration: const BoxDecoration(
@@ -164,6 +167,7 @@ class Deals extends StatelessWidget {
             ),
           ),
           Container(
+            margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             height: 100,
             width: 300,
             decoration: const BoxDecoration(

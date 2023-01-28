@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/api': (context) => const MyVerticalContainer(),
         '/create': (context) => const PersonAdd(),
         '/animate': (context) => const MyAnimatedContainer(),
-        '/whatsApp': (context) => const ChatList(),
+        '/whatsApp': (context) => const WhatsAppClonePage(),
       },
     );
   }
