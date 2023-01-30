@@ -16,9 +16,7 @@ class ShowInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOut,
+    return Container(
       margin: const EdgeInsets.only(
         right: 10,
         top: 12,

@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:home_app/chatGPT/addform.dart';
 import 'package:home_app/services/services.dart';
-
+import 'package:flutter_animate/flutter_animate.dart';
 import '../widgets/errorbox.dart';
 import '../widgets/showinfo.dart';
 
@@ -52,16 +51,26 @@ class _MyVerticalContainerState extends State<MyVerticalContainer> {
         future: _data,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 80, top: 0),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ShowInfo(index: index, snap: snapshot);
-                },
+            return Animate(
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 80, top: 0),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return ShowInfo(index: index, snap: snapshot)
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 1400))
+                        .slideY(
+                            begin: -5,
+                            duration: const Duration(milliseconds: 1300))
+                        .then()
+                        .shakeY(duration: const Duration(milliseconds: 350))
+                        .then();
+                  },
+                ),
               ),
-            );
+            ).fadeIn();
           } else if (snapshot.hasError) {
             return ErrorBox(
               message: snapshot.error.toString(),
