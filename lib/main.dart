@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         useMaterial3: true,
       ),
-      initialRoute: '/api',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Kcbdraft(),
         '/api': (context) => const MyVerticalContainer(),
