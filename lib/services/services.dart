@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-var url = Uri.http('localhost:8000', '/advocates/');
+var url = Uri.http('web-production-9444.up.railway.app', '/advocates/');
 
 class Services {
   static Future<List<dynamic>> fetchData() async {
@@ -13,29 +13,19 @@ class Services {
       throw Exception('Failed to load data');
     }
   }
-
-  static Future<http.Response> createResource(Map<String, String> data) async {
-    final response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: jsonEncode(data));
-
-    if (response.statusCode == 201) {
-      return response;
-    } else {
-      throw Exception('Failed to create resource');
-    }
-  }
 }
 
 void delete(String username) async {
-  var url = Uri.http('localhost:8000', '/advocates/$username/');
+  var url =
+      Uri.http('web-production-9444.up.railway.app', '/advocates/$username');
   try {
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {
     } else {
-      throw Exception('Failed to delete $username');
+      throw Exception('Failed to delete $username, ${response.statusCode}');
     }
   } catch (e) {
-    //Text(e.toString());
+    print(e);
   }
 }

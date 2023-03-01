@@ -12,44 +12,46 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('WhatsApp'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://scontent.fnbo8-1.fna.fbcdn.net/v/t39.30808-6/277744901_974262500143642_7463298529429713930_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeH-Wd1dpo6Sad300asZgSEMToIW2vCNCBNOghba8I0IEw-IjqTw12rZOVW4oiNmeOGlT3ZLJKj8YQvvPb7EY7YQ&_nc_ohc=PA5_Bl7TfnMAX99UTao&_nc_ht=scontent.fnbo8-1.fna&oh=00_AfC75chxG_eaOXT9SQCX7w_LjU1J0KmePeSoUi81SUD2RA&oe=63D9EFB3'),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('WhatsApp'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {},
             ),
-            title: const Text('Name'),
-            subtitle: const Text('Last message'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WhatsAppClonePage(),
-                ),
-              );
-            },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.message),
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: ListView.builder(
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: const CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://scontent.fnbo8-1.fna.fbcdn.net/v/t39.30808-6/277744901_974262500143642_7463298529429713930_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeH-Wd1dpo6Sad300asZgSEMToIW2vCNCBNOghba8I0IEw-IjqTw12rZOVW4oiNmeOGlT3ZLJKj8YQvvPb7EY7YQ&_nc_ohc=PA5_Bl7TfnMAX99UTao&_nc_ht=scontent.fnbo8-1.fna&oh=00_AfC75chxG_eaOXT9SQCX7w_LjU1J0KmePeSoUi81SUD2RA&oe=63D9EFB3'),
+              ),
+              title: const Text('Name'),
+              subtitle: const Text('Last message'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WhatsAppClonePage(),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.message),
+        ),
       ),
     );
   }

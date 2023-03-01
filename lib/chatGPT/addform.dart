@@ -74,8 +74,12 @@ class _PersonAddState extends State<PersonAdd> {
                       "username": _namecontroller.text,
                       "bio": _biocontroller.text,
                     };
+                    Uri uri = Uri.https(
+                      'web-production-9444.up.railway.app',
+                      '/advocates/',
+                    );
                     final response = await http.post(
-                      url,
+                      uri,
                       body: json.encode(data),
                       headers: {"Content-Type": "application/json"},
                     );
@@ -89,7 +93,7 @@ class _PersonAddState extends State<PersonAdd> {
                           actions: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/api');
+                                Navigator.of(context).pushReplacementNamed('/api');
                               },
                               child: const Text('Ok'),
                             ),

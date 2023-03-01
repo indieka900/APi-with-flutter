@@ -70,8 +70,8 @@ class ShowInfo extends StatelessWidget {
                           elevation: 12,
                           child: IconButton(
                             onPressed: () {
-                              delete(snap.data![index]['username']);
-                              Navigator.of(context).push(
+                              delete(snap.data[index]['username']);
+                              Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return const MyVerticalContainer();
