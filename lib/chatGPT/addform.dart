@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:home_app/widgets/dropdown.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:home_app/services/services.dart';
 
 class PersonAdd extends StatefulWidget {
   const PersonAdd({super.key});
@@ -20,13 +20,6 @@ class _PersonAddState extends State<PersonAdd> {
   final _namecontroller = TextEditingController();
 
   final _biocontroller = TextEditingController();
-
-  // void _handleItemSelected(String value) {
-  //   setState(() {
-  //     _selectedValue = value;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +67,18 @@ class _PersonAddState extends State<PersonAdd> {
             ),
             Row(
               children: [
-                const Text('Company:'),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 13,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 218, 216, 216),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(),
+                  ),
+                  child: const Text('Company:'),
+                ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -164,49 +168,4 @@ class _PersonAddState extends State<PersonAdd> {
   }
 }
 
-class DropdownButtonExample extends StatefulWidget {
-  final Function(Map<String, dynamic>?) onItemSelected;
-  const DropdownButtonExample({Key? key, required this.onItemSelected});
 
-  @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
-}
-
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  late Future<List<dynamic>> data;
-  String dropdownValue = '';
-  List<dynamic> _companies = [];
-  Map<String, dynamic>? _selectedCompany;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    List<dynamic> companies = await Services.fetchCompanies();
-    setState(() {
-      _companies = companies;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton(
-      value: _selectedCompany,
-      items: _companies.map((company) {
-        return DropdownMenuItem(
-          value: company,
-          child: Text(company['name']),
-        );
-      }).toList(),
-      onChanged: (value) {
-        setState(() {
-          _selectedCompany = value as Map<String, dynamic>?;
-          widget.onItemSelected(_selectedCompany);
-        });
-      },
-    );
-  }
-}

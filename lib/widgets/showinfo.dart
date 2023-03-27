@@ -49,12 +49,29 @@ class ShowInfo extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SelectableText(
-                    snap.data![index]['username'],
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 7, 50, 53),
+                  SizedBox(
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SelectableText(
+                          snap.data![index]['username'],
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 7, 50, 53),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SelectableText(
+                          'From:${snap.data![index]['company']['name']}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Row(
