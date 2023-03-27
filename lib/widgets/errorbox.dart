@@ -19,7 +19,7 @@ class ErrorBox extends StatelessWidget {
           // ),
         ],
         child: Container(
-          height: 125,
+          height: 165,
           padding: const EdgeInsets.only(right: 10, top: 12, left: 18),
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: const BoxDecoration(
@@ -30,7 +30,7 @@ class ErrorBox extends StatelessWidget {
             color: Color.fromARGB(255, 230, 129, 92),
           ),
           child: Center(
-            child: Text(
+            child: SelectableText(
               message,
               style: const TextStyle(
                 color: Color.fromARGB(255, 3, 54, 18),

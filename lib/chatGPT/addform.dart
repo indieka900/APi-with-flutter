@@ -64,6 +64,7 @@ class _PersonAddState extends State<PersonAdd> {
             const SizedBox(
               height: 25,
             ),
+            const DropdownButtonExample(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -93,7 +94,8 @@ class _PersonAddState extends State<PersonAdd> {
                           actions: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pushReplacementNamed('/api');
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/api');
                               },
                               child: const Text('Ok'),
                             ),
@@ -126,5 +128,58 @@ class _PersonAddState extends State<PersonAdd> {
         ),
       ),
     );
+  }
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  late Future<List<dynamic>> data;
+  String dropdownValue = '';
+
+  @override
+  void initState() {
+    super.initState();
+    data = Services.fetchCompanies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+        future: data,
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            List<dynamic> list = snapshot.data!;
+            dropdownValue = list[0]['name'];
+            return DropdownButton<String>(
+              value: dropdownValue,
+              isExpanded: true,
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              borderRadius: BorderRadius.circular(5),
+              onChanged: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  dropdownValue = value!;
+                });
+              },
+              items: list.map<DropdownMenuItem<String>>((dynamic value) {
+                return DropdownMenuItem<String>(
+                  value: value['name'],
+                  child: Text(value['name']),
+                );
+              }).toList(),
+            );
+          }
+        });
   }
 }

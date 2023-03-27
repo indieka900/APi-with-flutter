@@ -15,11 +15,13 @@ class MyVerticalContainer extends StatefulWidget {
 
 class _MyVerticalContainerState extends State<MyVerticalContainer> {
   late Future<List<dynamic>> _data;
+  late Future<List<dynamic>> data;
 
   @override
   void initState() {
     super.initState();
     _data = Services.fetchData();
+    data = Services.fetchCompanies();
   }
 
   @override
