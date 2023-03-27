@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -36,6 +37,8 @@ void delete(String username) async {
       throw Exception('Failed to delete $username, ${response.statusCode}');
     }
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
 }

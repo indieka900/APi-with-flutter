@@ -99,7 +99,7 @@ class _KcbdraftState extends State<Kcbdraft> {
         items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.green,
-            icon: InkWell(
+            icon: GestureDetector(
               onTap: () {},
               child: const Icon(Icons.home),
             ),
@@ -107,7 +107,7 @@ class _KcbdraftState extends State<Kcbdraft> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.greenAccent,
-            icon: InkWell(
+            icon: GestureDetector(
               onTap: () {},
               child: const Icon(Icons.savings),
             ),
@@ -115,7 +115,7 @@ class _KcbdraftState extends State<Kcbdraft> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.lightGreen,
-            icon: InkWell(
+            icon: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, '/api');
               },
@@ -125,7 +125,7 @@ class _KcbdraftState extends State<Kcbdraft> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.lightGreen,
-            icon: InkWell(
+            icon: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, '/whatsApp');
               },
