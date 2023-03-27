@@ -18,7 +18,7 @@ class Services {
   static Future<List<dynamic>> fetchCompanies() async {
     final response = await http.get(url2);
     if (response.statusCode == 200) {
-      var data = json.decode(response.body).reversed.toList();
+      final List<dynamic> data = json.decode(response.body).reversed.toList();
       return data;
     } else {
       throw Exception('Failed to load data');

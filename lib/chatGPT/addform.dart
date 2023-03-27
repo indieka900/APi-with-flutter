@@ -13,11 +13,19 @@ class PersonAdd extends StatefulWidget {
 }
 
 class _PersonAddState extends State<PersonAdd> {
+  Map<String, dynamic>? _selectedCompany;
+
   final formKey = GlobalKey<FormState>();
 
   final _namecontroller = TextEditingController();
 
   final _biocontroller = TextEditingController();
+
+  // void _handleItemSelected(String value) {
+  //   setState(() {
+  //     _selectedValue = value;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +70,28 @@ class _PersonAddState extends State<PersonAdd> {
               ),
             ),
             const SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                const Text('Company:'),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: DropdownButtonExample(
+                    onItemSelected: (company) {
+                      setState(() {
+                        _selectedCompany = company;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
               height: 25,
             ),
-            const DropdownButtonExample(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -74,9 +101,15 @@ class _PersonAddState extends State<PersonAdd> {
                     final data = {
                       "username": _namecontroller.text,
                       "bio": _biocontroller.text,
+                      "company": {
+                        "id": _selectedCompany?['id'].toString(),
+                        "employee_count": _selectedCompany?['employee_count'],
+                        "name": _selectedCompany?['name'],
+                        "bio": _selectedCompany?['bio']
+                      }
                     };
-                    Uri uri = Uri.https(
-                      'web-production-9444.up.railway.app',
+                    Uri uri = Uri.http(
+                      '127.0.0.1:8000',
                       '/advocates/',
                     );
                     final response = await http.post(
@@ -132,7 +165,8 @@ class _PersonAddState extends State<PersonAdd> {
 }
 
 class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+  final Function(Map<String, dynamic>?) onItemSelected;
+  const DropdownButtonExample({Key? key, required this.onItemSelected});
 
   @override
   State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
@@ -141,45 +175,38 @@ class DropdownButtonExample extends StatefulWidget {
 class _DropdownButtonExampleState extends State<DropdownButtonExample> {
   late Future<List<dynamic>> data;
   String dropdownValue = '';
+  List<dynamic> _companies = [];
+  Map<String, dynamic>? _selectedCompany;
 
   @override
   void initState() {
     super.initState();
-    data = Services.fetchCompanies();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    List<dynamic> companies = await Services.fetchCompanies();
+    setState(() {
+      _companies = companies;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<dynamic>>(
-        future: data,
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            List<dynamic> list = snapshot.data!;
-            dropdownValue = list[0]['name'];
-            return DropdownButton<String>(
-              value: dropdownValue,
-              isExpanded: true,
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              borderRadius: BorderRadius.circular(5),
-              onChanged: (String? value) {
-                // This is called when the user selects an item.
-                setState(() {
-                  dropdownValue = value!;
-                });
-              },
-              items: list.map<DropdownMenuItem<String>>((dynamic value) {
-                return DropdownMenuItem<String>(
-                  value: value['name'],
-                  child: Text(value['name']),
-                );
-              }).toList(),
-            );
-          }
+    return DropdownButton(
+      value: _selectedCompany,
+      items: _companies.map((company) {
+        return DropdownMenuItem(
+          value: company,
+          child: Text(company['name']),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          _selectedCompany = value as Map<String, dynamic>?;
+          widget.onItemSelected(_selectedCompany);
         });
+      },
+    );
   }
 }
